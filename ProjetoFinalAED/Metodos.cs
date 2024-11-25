@@ -21,14 +21,19 @@ namespace ProjetoFinalAED
         {
 
         }
+        public static void AdicionarNaListaGeral(Curso curso, Universidade stark)
+        {
+            //Pegar pelo código do curso dicionario
+        }
+        public static void OrdenarLista(Curso curso)
+        {
+
+        }
         public static void CriarCandidato(string linha)
         {
 
         }
 
-        public static void OrdenarLista()
-        {
-
-        }
+        
     }
 }

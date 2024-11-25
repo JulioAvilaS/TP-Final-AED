@@ -11,6 +11,7 @@ namespace ProjetoFinalAED
         public string Nome { get; set; }
         public int QuantVagas { get; set; }
         public double NotaCorte { get; set; }
+        List<Candidato> ListaOrdenada {  get; set; } 
         List<Candidato> Selecionados { get; set;}
         public FilaLinear FilaDeEspera { get; set; }
 
