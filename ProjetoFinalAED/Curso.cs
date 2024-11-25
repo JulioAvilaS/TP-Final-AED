@@ -21,7 +21,7 @@ namespace ProjetoFinalAED
             QuantVagas = quantVagas;
             NotaCorte = 0;
             Selecionados = new List<Candidato>();
-            FilaDeEspera = new FilaLinear(10);
+            FilaDeEspera = new FilaLinear();
         }
     }
 }

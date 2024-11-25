@@ -14,6 +14,7 @@ namespace ProjetoFinalAED
         public Universidade()
         {
             Cursos = new Dictionary<int, Curso>();
+
         }
     }
 }

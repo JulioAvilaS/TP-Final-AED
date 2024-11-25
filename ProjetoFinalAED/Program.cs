@@ -4,7 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Universidade stark = new Universidade();
+            for (int i = 0; i < 10; i++) 
+            {
+                
+            }
         }
     }
 }
