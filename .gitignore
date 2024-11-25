@@ -1,0 +1,17 @@
+# Pastas de compilação
+bin/
+obj/
+
+# Configurações do Visual Studio
+.vs/
+*.user
+*.suo
+
+# Arquivos de log
+*.log
+
+# Dependências
+packages/
+
+# Configuração de ambiente
+.env
