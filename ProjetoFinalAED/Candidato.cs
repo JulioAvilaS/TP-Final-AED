@@ -16,7 +16,7 @@ namespace ProjetoFinalAED
         public int OpcaoDeCurso1 { get; set; }
         public int OpcaoDeCurso2 { get; set; }
 
-        Candidato(string nome, double redacao, double matematica, double linguagens, int opcao1, int opcao2) 
+        public Candidato(string nome, double redacao, double matematica, double linguagens, int opcao1, int opcao2) 
         {
             Nome = nome;
             Redacao = redacao;

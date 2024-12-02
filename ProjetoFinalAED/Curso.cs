@@ -11,8 +11,8 @@ namespace ProjetoFinalAED
         public string Nome { get; set; }
         public int QuantVagas { get; set; }
         public double NotaCorte { get; set; }
-        List<Candidato> ListaOrdenada {  get; set; } 
-        List<Candidato> Selecionados { get; set;}
+        public List<Candidato> ListaOrdenada {  get; set; }
+        public List<Candidato> Selecionados { get; set;}
         public FilaLinear FilaDeEspera { get; set; }
 
 
@@ -23,6 +23,11 @@ namespace ProjetoFinalAED
             NotaCorte = 0;
             Selecionados = new List<Candidato>();
             FilaDeEspera = new FilaLinear();
+        }
+
+        public void CalcularNotaCorte()
+        {
+            NotaCorte = ListaOrdenada[QuantVagas - 1].Media;
         }
     }
 }
