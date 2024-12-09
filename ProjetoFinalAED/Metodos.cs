@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -124,7 +125,7 @@ namespace ProjetoFinalAED
             }
         }
 
-        public static void OrdenarLista(Curso curso)
+        public static void OrdenarLista(int codCurso, Universidade stark)
         {
 
         }
