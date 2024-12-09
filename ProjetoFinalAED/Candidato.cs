@@ -32,5 +32,10 @@ namespace ProjetoFinalAED
             return (Redacao + Matematica + Linguagens) / 3;
         }
 
+        public override string ToString()
+        {
+            return $"{Nome} {Media} {Redacao} {Matematica} {Linguagens}";
+        }
+
     }
 }

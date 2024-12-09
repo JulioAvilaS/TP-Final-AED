@@ -29,5 +29,10 @@ namespace ProjetoFinalAED
         {
             NotaCorte = ListaOrdenada[QuantVagas - 1].Media;
         }
+
+        public override string ToString()
+        {
+            return $"{Nome} {NotaCorte}";
+        }
     }
 }
