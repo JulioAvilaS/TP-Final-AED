@@ -13,7 +13,7 @@ namespace ProjetoFinalAED
         {
             string[] itens = frase.Split(";");
 
-            if (stark.Cursos.TryGetValue(int.Parse(itens[4]), out Curso curso1))
+            if (stark.Cursos.TryGetValue(int.Parse(itens[4]), out Curso curso1))   // --- ATENÇÂO --- O método TryGetValue manda como referência a key a ser procurada e retorna com o out o value dessa chave. 
             {
                 curso1.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
@@ -52,7 +52,7 @@ namespace ProjetoFinalAED
             if (stark.Cursos.TryGetValue(codCurso, out Curso primeiroCurso))
             {
                 int j = primeiroCurso.QuantVagas;
-                for (int i = 0; primeiroCurso.ListaOrdenada.Count >=1 && i < j; i++)
+                for (int i = 0; primeiroCurso.ListaOrdenada.Count >= 1 && i < j; j--)
                 {
                     var aluno = primeiroCurso.ListaOrdenada[i];
                     if (aluno.OpcaoDeCurso1 == codCurso)
@@ -64,7 +64,7 @@ namespace ProjetoFinalAED
                             segundoCurso.ListaOrdenada.Remove(aluno);
                             //if (segundoCurso.FilaDeEspera.Contains(aluno))
                             //{
-                            //    segundoCurso.FilaDeEspera.Remove(primeiroCurso.ListaOrdenada);
+                            //    segundoCurso.FilaDeEspera.Remove(aluno);
                             //    ReorganizarFila(codCurso, stark)
                             //}
                             //A FilaLinear ainda não existe...
@@ -76,20 +76,18 @@ namespace ProjetoFinalAED
                             }
                         }
 
-                        primeiroCurso.ListaOrdenada.Remove(aluno);
-                        i--; j--;
-
                     }
                     else if (aluno.OpcaoDeCurso2 == codCurso)
                     {
                         primeiroCurso.Selecionados.Add(aluno);
-                        primeiroCurso.ListaOrdenada.Remove(aluno);
-                        i--;  j--;
+                        j--;
                     }
                     else
                     {
                         Console.WriteLine("Houve um erro ao inserir na lista de selecionados");
                     }
+
+                    primeiroCurso.ListaOrdenada.Remove(aluno);
                 }
             }
             else
@@ -101,9 +99,9 @@ namespace ProjetoFinalAED
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
             {
-                for (int i = 0, j = curso.QuantVagas; curso.ListaOrdenada.Count >= 1 && i < 10; i++, j++)
+                for (int i = 0; curso.ListaOrdenada[i] != null && i < 10; i++)
                 {
-                    //curso.FilaDeEspera.Add(curso.ListaOrdenada);
+                    //curso.FilaDeEspera.Add(curso.ListaOrdenada[i]);
                     curso.ListaOrdenada.Remove(curso.ListaOrdenada[i]);
                 }
             }
@@ -112,8 +110,8 @@ namespace ProjetoFinalAED
         public static void ReorganizarLista(Curso curso)
         {
             //if(curso.FilaDeEspera.Count >= 1){
-            //curso.Selecionados.Add(curso.FilaDeEspera.Deqeue());
-            ReorganizarFIla(curso);
+            //curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());     //Recebe o retorno da remoção da fila de espera e adiciona.
+              ReorganizarFIla(curso);
             //}
         }
 
@@ -121,7 +119,7 @@ namespace ProjetoFinalAED
         {
             if (curso.ListaOrdenada.Count >= 1)
             {
-                //curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);
+                //curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);      //Adiciona a primeira posição da lista de espera
                 curso.ListaOrdenada.RemoveAt(0);
             }
         }
