@@ -13,7 +13,7 @@ namespace ProjetoFinalAED
         {
             string[] itens = frase.Split(";");
 
-            if (stark.Cursos.TryGetValue(int.Parse(itens[0]), out Curso curso1))
+            if (stark.Cursos.TryGetValue(int.Parse(itens[4]), out Curso curso1))
             {
                 curso1.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
@@ -23,7 +23,7 @@ namespace ProjetoFinalAED
                 throw new Exception("Não foi possível encontrar um curso com esse código de identifição");
             }
 
-            if (stark.Cursos.TryGetValue(int.Parse(itens[0]), out Curso curso2))
+            if (stark.Cursos.TryGetValue(int.Parse(itens[5]), out Curso curso2))
             {
                 curso2.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
@@ -54,35 +54,36 @@ namespace ProjetoFinalAED
                 int j = primeiroCurso.QuantVagas;
                 for (int i = 0; primeiroCurso.ListaOrdenada.Count >=1 && i < j; i++)
                 {
-                    if (primeiroCurso.ListaOrdenada[i].OpcaoDeCurso1 == codCurso)
+                    var aluno = primeiroCurso.ListaOrdenada[i];
+                    if (aluno.OpcaoDeCurso1 == codCurso)
                     {
-                        primeiroCurso.Selecionados.Add(primeiroCurso.ListaOrdenada[i]);
+                        primeiroCurso.Selecionados.Add(aluno);
 
-                        if (stark.Cursos.TryGetValue(primeiroCurso.ListaOrdenada[i].OpcaoDeCurso2, out Curso segundoCurso))
+                        if (stark.Cursos.TryGetValue(aluno.OpcaoDeCurso2, out Curso segundoCurso))
                         {
-                            segundoCurso.ListaOrdenada.Remove(primeiroCurso.ListaOrdenada[i]);
-                            //if (segundoCurso.FilaDeEspera.Contains(primeiroCurso.ListaOrdenada[i]))
+                            segundoCurso.ListaOrdenada.Remove(aluno);
+                            //if (segundoCurso.FilaDeEspera.Contains(aluno))
                             //{
                             //    segundoCurso.FilaDeEspera.Remove(primeiroCurso.ListaOrdenada);
                             //    ReorganizarFila(codCurso, stark)
                             //}
                             //A FilaLinear ainda não existe...
 
-                            if (segundoCurso.Selecionados.Contains(primeiroCurso.ListaOrdenada[i]))
+                            if (segundoCurso.Selecionados.Contains(aluno))
                             {
-                                segundoCurso.Selecionados.Remove(primeiroCurso.ListaOrdenada[i]);
+                                segundoCurso.Selecionados.Remove(aluno);
                                 ReorganizarLista(segundoCurso);
                             }
                         }
 
-                        primeiroCurso.ListaOrdenada.Remove(primeiroCurso.ListaOrdenada[i]);
+                        primeiroCurso.ListaOrdenada.Remove(aluno);
                         i--; j--;
 
                     }
-                    else if (primeiroCurso.ListaOrdenada[i].OpcaoDeCurso2 == codCurso)
+                    else if (aluno.OpcaoDeCurso2 == codCurso)
                     {
-                        primeiroCurso.Selecionados.Add(primeiroCurso.ListaOrdenada[i]);
-                        primeiroCurso.ListaOrdenada.Remove(primeiroCurso.ListaOrdenada[i]);
+                        primeiroCurso.Selecionados.Add(aluno);
+                        primeiroCurso.ListaOrdenada.Remove(aluno);
                         i--;  j--;
                     }
                     else
