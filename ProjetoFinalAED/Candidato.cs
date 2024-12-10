@@ -34,7 +34,7 @@ namespace ProjetoFinalAED
 
         public override string ToString()
         {
-            return $"{Nome} {Media} {Redacao} {Matematica} {Linguagens}";
+            return $"{Nome} {Math.Round(Media, 2)} {Redacao} {Matematica} {Linguagens}";
         }
 
     }

@@ -6,14 +6,26 @@ using System.Threading.Tasks;
 
 namespace ProjetoFinalAED
 {
-    internal class FilaLinear
+    public class FilaLinear
     {
-        private Candidato[] array;
-        int primeiro, ultimo, cont;
-        public FilaLinear(int tamanho)
+        internal Candidato[] array;
+        private int primeiro, ultimo, count;
+        public int Primeiro
         {
-            array = new Candidato[tamanho + 1];
-            primeiro = ultimo = cont = 0;
+            get { return primeiro; } 
+        }
+        public int Ultimo
+        {
+            get { return ultimo; }
+        }
+        public int Count
+        {
+            get { return count; }
+        }
+        public FilaLinear()
+        {
+            array = new Candidato[11];
+            primeiro = ultimo = count = 0;
         }
         public void Add(Candidato x)
         {
@@ -21,24 +33,20 @@ namespace ProjetoFinalAED
                 throw new Exception("Erro!");
             array[ultimo] = x;
             ultimo = (ultimo + 1) % array.Length;
-            cont++;
+            count++;
         }
-        public int Cont
-        {
-            get { return cont; }
-        }
-        public bool Contains(Candidato x)
+        public bool Contains(Candidato candidato)
         {
             for (int i = primeiro; i != ultimo; i = (i + 1) % array.Length)
             {
-                if (array[i].Equals(x))
+                if (array[i].Equals(candidato))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public void Remove(Candidato aluno)
+        public void Remove(Candidato candidato)
         {
             if (primeiro == ultimo)
                 throw new Exception("Fila vazia!");
@@ -47,7 +55,7 @@ namespace ProjetoFinalAED
 
             for (int i = primeiro; i != ultimo; i = (i + 1) % array.Length)
             {
-                if (array[i] != null && array[i].Equals(aluno))
+                if (array[i] != null && array[i].Equals(candidato))
                 {
                     posicaoRemover = i;
                     i = ultimo;
@@ -83,6 +91,10 @@ namespace ProjetoFinalAED
 
             
             return itemRemovido;
+        }
+        public int GetArrayLength()
+        {
+            return array.Length;
         }
     }
 }

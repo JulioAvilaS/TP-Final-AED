@@ -14,25 +14,27 @@ namespace ProjetoFinalAED
         public List<Candidato> ListaOrdenada {  get; set; }
         public List<Candidato> Selecionados { get; set;}
         public FilaLinear FilaDeEspera { get; set; }
-
+        
 
         public Curso(string nomeDoCurso, int quantVagas)
         {
             Nome = nomeDoCurso;
             QuantVagas = quantVagas;
             NotaCorte = 0;
+            ListaOrdenada = new List<Candidato>();
             Selecionados = new List<Candidato>();
             FilaDeEspera = new FilaLinear();
         }
 
         public void CalcularNotaCorte()
         {
-            NotaCorte = ListaOrdenada[QuantVagas - 1].Media;
+            NotaCorte = Selecionados[Selecionados.Count - 1].Media;
         }
 
         public override string ToString()
         {
-            return $"{Nome} {NotaCorte}";
+            CalcularNotaCorte();
+            return $"{Nome} {Math.Round(NotaCorte, 2)}";
         }
     }
 }

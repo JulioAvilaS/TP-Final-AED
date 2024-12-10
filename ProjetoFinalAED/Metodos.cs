@@ -11,23 +11,24 @@ namespace ProjetoFinalAED
 
             if (stark.Cursos.TryGetValue(int.Parse(itens[4]), out Curso curso1))
             {
-                curso1.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
+                curso1.ListaOrdenada.Add(new Candidato(itens[0], double.Parse(itens[1]), double.Parse(itens[2]), double.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
             }
             else
             {
-                throw new Exception("Não foi possível encontrar um curso com esse código de identificação");
+                Console.WriteLine("Houve um erro ao inserir na lista de selecionados");
             }
 
             if (stark.Cursos.TryGetValue(int.Parse(itens[5]), out Curso curso2))
             {
-                curso2.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
+                curso2.ListaOrdenada.Add(new Candidato(itens[0], double.Parse(itens[1]), double.Parse(itens[2]), double.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
             }
             else
             {
-                throw new Exception("Não foi possível encontrar um curso com esse código de identificação");
+                Console.WriteLine("Houve um erro ao inserir na lista de selecionados");
             }
+
         }
 
         public static void AdicionarNoDicionario(string frase, Universidade stark)
@@ -58,6 +59,7 @@ namespace ProjetoFinalAED
                         if (stark.Cursos.TryGetValue(aluno.OpcaoDeCurso2, out Curso segundoCurso))
                         {
                             segundoCurso.ListaOrdenada.Remove(aluno);
+
                             if (segundoCurso.FilaDeEspera.Contains(aluno))
                             {
                                 segundoCurso.FilaDeEspera.Remove(aluno);
@@ -119,14 +121,13 @@ namespace ProjetoFinalAED
             }
         }
 
-        public static void OrdenarLista(int codCurso, Universidade stark)
+       public static void OrdenarLista(int codCurso, Universidade stark)
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
             {
-                curso.ListaOrdenada = MergeSort(curso.ListaOrdenada, 3);
+                curso.ListaOrdenada = MergeSort(MergeSort(MergeSort(curso.ListaOrdenada, 1), 2), 3);
             }
         }
-
         public static List<Candidato> MergeSort(List<Candidato> lista, int op)
         {
             if (lista.Count <= 1)
@@ -135,10 +136,8 @@ namespace ProjetoFinalAED
             int mid = lista.Count / 2;
             List<Candidato> esq = MergeSort(lista.GetRange(0, mid), op);
             List<Candidato> dir = MergeSort(lista.GetRange(mid, lista.Count - mid), op);
-
             return Intercala(esq, dir, op);
         }
-
         public static List<Candidato> Intercala(List<Candidato> esq, List<Candidato> dir, int op)
         {
             List<Candidato> candidatos = new List<Candidato>();
@@ -160,7 +159,6 @@ namespace ProjetoFinalAED
                     j++;
                 }
             }
-
             candidatos.AddRange(esq.GetRange(i, esq.Count - i));
             candidatos.AddRange(dir.GetRange(j, dir.Count - j));
             return candidatos;
