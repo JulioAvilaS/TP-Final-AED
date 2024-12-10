@@ -111,8 +111,8 @@ namespace ProjetoFinalAED
         public static void ReorganizarLista(Curso curso)
         {
             if(curso.FilaDeEspera.Cont >= 1){
-            //curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());     //Recebe o retorno da remoção da fila de espera e adiciona.
-              ReorganizarFIla(curso);
+            curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());     //Recebe o retorno da remoção da fila de espera e adiciona.
+            ReorganizarFIla(curso);
             }
         }
 

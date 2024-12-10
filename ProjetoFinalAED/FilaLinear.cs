@@ -68,5 +68,21 @@ namespace ProjetoFinalAED
             ultimo = (ultimo - 1 + array.Length) % array.Length;
             array[ultimo] = null;
         }
+        public Candidato Dequeue()
+        {
+            if (primeiro == ultimo)
+            {
+                throw new Exception("Fila vazia!");
+            }
+
+            
+            Candidato itemRemovido = array[primeiro];
+
+            
+            primeiro = (primeiro + 1) % array.Length;
+
+            
+            return itemRemovido;
+        }
     }
 }
