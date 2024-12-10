@@ -125,10 +125,61 @@ namespace ProjetoFinalAED
             }
         }
 
-        public static void OrdenarLista(Curso curso)
-        {
-
-        }
-
+        public static void OrdenarLista((int codCurso, Universidade stark))
+         {
+             if(stark.Cursos.TryGetValue(codCurso, out Curso primeiroCurso)
+             {
+                 List<Candidato> ordenado = new MergeSort(MergeSort(MergeSort(primeiroCurso.ListaOrdenada, 1), 2), 3);
+                 foreach (Candidato aluno in ordenado)
+                     primeiroCurso.ListaOrdenada[i] = ordenado[i];
+             }
+         }
+        
+         public static List<Candidato> MergeSort(List<Candidato> lista, int op)
+         {
+             if (List.Count <= 1)
+                 return lista;
+        
+             int mid = lista.Count / 2;
+             List<Candidato> esq = MergeSort(lista.GetRange(0,mid));
+             List<Candidato> dir = MergeSort(lista.GetRange(mid,lista.Count - mid));
+        
+             return Intercala(esq, dir, op);
+         }
+         public static List<Candidato> Intercala (List<Candidato> esq, List<Candidato> dir, int op)
+         {
+             List<Candidato> candidatos = new List<Candidato>();
+             int i=0,j=0;
+             double notaEsq,notaDir;
+             while (i < esq.Count && j < dir.Count) {
+                 if (op == 1) {
+                     notaEsq = esq[i].Matematica;
+                     notaDir = dir[j].Matematica;
+                  }
+                 else if (op == 2)
+                 {
+                     notaEsq = esq[i].Redacao;
+                     notaDir = dir[j].Redacao;
+                 }
+                 else
+                 {
+                     notaEsq = esq[i].Media;
+                     notaDir = dir[j].Media;
+                 }
+                 if (notaEsq >= notaDir)
+                 {
+                     candidatos.Add(esq[i]);
+                     i++;
+                 }
+                 else
+                 {
+                     candidatos.Add(dir[j]);
+                     j++;
+                 }
+             }
+             candidatos.AddRange(esq.GetRange(i, esq.Count - i));
+             candidatos.AddRange(dir.GetRange(j, dir.Count - j));
+             return candidatos;
+         }
     }
 }
