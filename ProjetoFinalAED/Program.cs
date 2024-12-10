@@ -57,10 +57,10 @@ namespace ProjetoFinalAED
                         saida.WriteLine(candidato);
                     }
                     saida.WriteLine("Fila de Espera");
-                    //foreach (var candidato in curso.Value.FilaDeEspera)
-                    //{
-                    //    saida.WriteLine(candidato);
-                    //}
+                    foreach (var candidato in curso.Value.FilaDeEspera)
+                    {
+                        saida.WriteLine(candidato);
+                    }
 
                 }
                 
