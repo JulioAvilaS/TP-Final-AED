@@ -27,6 +27,10 @@ namespace ProjetoFinalAED
             array = new Candidato[11];
             primeiro = ultimo = count = 0;
         }
+        public int GetArrayLength()
+        {
+            return array.Length;
+        }
         public void Add(Candidato x)
         {
             if (((ultimo + 1) % array.Length) == primeiro)
@@ -75,6 +79,7 @@ namespace ProjetoFinalAED
 
             ultimo = (ultimo - 1 + array.Length) % array.Length;
             array[ultimo] = null;
+            count--;
 
             return true;
         }
@@ -90,13 +95,9 @@ namespace ProjetoFinalAED
 
             
             primeiro = (primeiro + 1) % array.Length;
+            count--;
 
-            
             return itemRemovido;
-        }
-        public int GetArrayLength()
-        {
-            return array.Length;
         }
     }
 }

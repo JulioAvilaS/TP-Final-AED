@@ -11,10 +11,10 @@ namespace ProjetoFinalAED
         public string Nome { get; set; }
         public int QuantVagas { get; set; }
         public double NotaCorte { get; set; }
-        public List<Candidato> ListaOrdenada {  get; set; }
-        public List<Candidato> Selecionados { get; set;}
+        public List<Candidato> ListaOrdenada { get; set; }
+        public List<Candidato> Selecionados { get; set; }
         public FilaLinear FilaDeEspera { get; set; }
-        
+
 
         public Curso(string nomeDoCurso, int quantVagas)
         {
@@ -28,7 +28,8 @@ namespace ProjetoFinalAED
 
         public void CalcularNotaCorte()
         {
-            NotaCorte = Selecionados[Selecionados.Count - 1].Media;
+            if (Selecionados.Count > 0)
+                NotaCorte = Selecionados[Selecionados.Count - 1].Media;
         }
 
 

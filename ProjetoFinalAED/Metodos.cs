@@ -48,56 +48,27 @@ namespace ProjetoFinalAED
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso primeiroCurso))
             {
-                
+
                 for (int j = primeiroCurso.QuantVagas; primeiroCurso.ListaOrdenada.Count >= 1 && j > 0; j--)
                 {
-                    var aluno = primeiroCurso.ListaOrdenada[0];
-                    if (aluno.OpcaoDeCurso1 == codCurso)
+                    var candidato = primeiroCurso.ListaOrdenada[0];
+                    if (candidato.OpcaoDeCurso1 == codCurso)
                     {
-                        primeiroCurso.Selecionados.Add(aluno);
+                        primeiroCurso.Selecionados.Add(candidato);
 
-                        if (stark.Cursos.TryGetValue(aluno.OpcaoDeCurso2, out Curso segundoCurso))
-                        {
-                            Console.WriteLine("Segundo curso: " + segundoCurso.Nome);
-                            Console.WriteLine("Candidatos: ");
-                            foreach (var candidato in segundoCurso.ListaOrdenada)
-                            {
-                                Console.WriteLine(candidato);
-                            }
-
-                            if (segundoCurso.ListaOrdenada.Contains(aluno))
-                            {
-                                Console.WriteLine($"Removendo aluno {aluno.Nome} encontrado");
-                                segundoCurso.ListaOrdenada.Remove(aluno);
-                            }
-                            else
-                            {
-                                Console.WriteLine("Aluno não encontrado");
-                            }
-
-                            if (segundoCurso.Selecionados.Contains(aluno))
-                            {
-                                Console.WriteLine("Aluno removido s " + segundoCurso.Selecionados.Remove(aluno));
-                                ReorganizarLista(segundoCurso);
-                            }
-
-                            if (segundoCurso.FilaDeEspera.Contains(aluno))
-                            {
-                                Console.WriteLine("Aluno removido e " + segundoCurso.FilaDeEspera.Remove(aluno));
-                            }
-
-                        }
+                        if (stark.Cursos.TryGetValue(candidato.OpcaoDeCurso2, out Curso segundoCurso))
+                            DeletarSegundoCurso(candidato, segundoCurso, stark);
                     }
-                    else if (aluno.OpcaoDeCurso2 == codCurso)
+                    else if (candidato.OpcaoDeCurso2 == codCurso)
                     {
-                        primeiroCurso.Selecionados.Add(aluno);
+                        primeiroCurso.Selecionados.Add(candidato);
                     }
                     else
                     {
                         Console.WriteLine("Houve um erro ao inserir na lista de selecionados");
                     }
 
-                    primeiroCurso.ListaOrdenada.Remove(aluno);
+                    primeiroCurso.ListaOrdenada.Remove(candidato);
                 }
             }
             else
@@ -105,24 +76,42 @@ namespace ProjetoFinalAED
                 Console.WriteLine("Não foi possível encontrar um curso com esse código de identificação");
             }
         }
-
-        public static void InserirNaFilaDeEspera(int codCurso, Universidade stark)
+        public static void DeletarSegundoCurso(Candidato candidato, Curso segundoCurso, Universidade stark)
         {
-            if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
+            if (segundoCurso.ListaOrdenada.Contains(candidato))
             {
-                for (int i = 0; curso.ListaOrdenada.Count > i && i < 10; i++)
-                {
-                    curso.FilaDeEspera.Add(curso.ListaOrdenada[i]);
-                    curso.ListaOrdenada.Remove(curso.ListaOrdenada[i]);
-                }
+                segundoCurso.ListaOrdenada.Remove(candidato);
+            }
+
+            if (segundoCurso.Selecionados.Contains(candidato))
+            {
+                segundoCurso.Selecionados.Remove(candidato);
+                ReorganizarLista(segundoCurso, stark);
+            }
+
+            if (segundoCurso.FilaDeEspera.Contains(candidato))
+            {
+                segundoCurso.FilaDeEspera.Remove(candidato);
             }
         }
 
-        public static void ReorganizarLista(Curso curso)
+        public static void ReorganizarLista(Curso curso, Universidade stark)
         {
             if (curso.FilaDeEspera.Count >= 1)
             {
-                curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());
+                Candidato candidato = curso.FilaDeEspera.Dequeue();
+                curso.Selecionados.Add(candidato);
+                if (stark.Cursos.TryGetValue(candidato.OpcaoDeCurso1, out Curso primeiroCurso))
+                {
+                    if (primeiroCurso == curso)
+                    {
+                        if (stark.Cursos.TryGetValue(candidato.OpcaoDeCurso2, out Curso segundoCurso))
+                        {
+                            DeletarSegundoCurso(candidato, segundoCurso, stark);
+                        }
+                    }
+                    
+                }
                 ReorganizarFIla(curso);
             }
         }
@@ -135,8 +124,19 @@ namespace ProjetoFinalAED
                 curso.ListaOrdenada.RemoveAt(0);
             }
         }
+        public static void InserirNaFilaDeEspera(int codCurso, Universidade stark)
+        {
+            if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
+            {
+                for (int i = 0; curso.ListaOrdenada.Count > i && i < 10; i++)
+                {
+                    curso.FilaDeEspera.Add(curso.ListaOrdenada[i]);
+                    curso.ListaOrdenada.Remove(curso.ListaOrdenada[i]);
+                }
+            }
+        }
 
-       public static void OrdenarLista(int codCurso, Universidade stark)
+        public static void OrdenarLista(int codCurso, Universidade stark)
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
             {

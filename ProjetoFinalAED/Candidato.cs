@@ -32,20 +32,19 @@ namespace ProjetoFinalAED
             return (Redacao + Matematica + Linguagens) / 3;
         }
 
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
-            if (obj is Candidato outro)
+            if (obj is Candidato candidato)
             {
-                return Nome == outro.Nome &&
-                       Matematica == outro.Matematica &&
-                       Redacao == outro.Redacao &&
-                       OpcaoDeCurso1 == outro.OpcaoDeCurso1 &&
-                       OpcaoDeCurso2 == outro.OpcaoDeCurso2 &&
-                       Media == outro.Media;
+                return Nome == candidato.Nome &&
+                       Matematica == candidato.Matematica &&
+                       Redacao == candidato.Redacao &&
+                       OpcaoDeCurso1 == candidato.OpcaoDeCurso1 &&
+                       OpcaoDeCurso2 == candidato.OpcaoDeCurso2 &&
+                       Media == candidato.Media;
             }
             return false;
         }
-
 
         public override string ToString()
         {
