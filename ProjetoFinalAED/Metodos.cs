@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,7 +14,7 @@ namespace ProjetoFinalAED
         {
             string[] itens = frase.Split(";");
 
-            if (stark.Cursos.TryGetValue(int.Parse(itens[0]), out Curso curso1))
+            if (stark.Cursos.TryGetValue(int.Parse(itens[4]), out Curso curso1))   // --- ATENÇÂO --- O método TryGetValue manda como referência a key a ser procurada e retorna com o out o value dessa chave. 
             {
                 curso1.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
@@ -23,7 +24,7 @@ namespace ProjetoFinalAED
                 throw new Exception("Não foi possível encontrar um curso com esse código de identifição");
             }
 
-            if (stark.Cursos.TryGetValue(int.Parse(itens[0]), out Curso curso2))
+            if (stark.Cursos.TryGetValue(int.Parse(itens[5]), out Curso curso2))
             {
                 curso2.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
@@ -52,43 +53,42 @@ namespace ProjetoFinalAED
             if (stark.Cursos.TryGetValue(codCurso, out Curso primeiroCurso))
             {
                 int j = primeiroCurso.QuantVagas;
-                for (int i = 0; primeiroCurso.ListaOrdenada.Count >=1 && i < j; i++)
+                for (int i = 0; primeiroCurso.ListaOrdenada.Count >= 1 && i < j; j--)
                 {
-                    if (primeiroCurso.ListaOrdenada[i].OpcaoDeCurso1 == codCurso)
+                    var aluno = primeiroCurso.ListaOrdenada[i];
+                    if (aluno.OpcaoDeCurso1 == codCurso)
                     {
-                        primeiroCurso.Selecionados.Add(primeiroCurso.ListaOrdenada[i]);
+                        primeiroCurso.Selecionados.Add(aluno);
 
-                        if (stark.Cursos.TryGetValue(primeiroCurso.ListaOrdenada[i].OpcaoDeCurso2, out Curso segundoCurso))
+                        if (stark.Cursos.TryGetValue(aluno.OpcaoDeCurso2, out Curso segundoCurso))
                         {
-                            segundoCurso.ListaOrdenada.Remove(primeiroCurso.ListaOrdenada[i]);
-                            //if (segundoCurso.FilaDeEspera.Contains(primeiroCurso.ListaOrdenada[i]))
+                            segundoCurso.ListaOrdenada.Remove(aluno);
+                            //if (segundoCurso.FilaDeEspera.Contains(aluno))
                             //{
-                            //    segundoCurso.FilaDeEspera.Remove(primeiroCurso.ListaOrdenada);
+                            //    segundoCurso.FilaDeEspera.Remove(aluno);
                             //    ReorganizarFila(codCurso, stark)
                             //}
                             //A FilaLinear ainda não existe...
 
-                            if (segundoCurso.Selecionados.Contains(primeiroCurso.ListaOrdenada[i]))
+                            if (segundoCurso.Selecionados.Contains(aluno))
                             {
-                                segundoCurso.Selecionados.Remove(primeiroCurso.ListaOrdenada[i]);
+                                segundoCurso.Selecionados.Remove(aluno);
                                 ReorganizarLista(segundoCurso);
                             }
                         }
 
-                        primeiroCurso.ListaOrdenada.Remove(primeiroCurso.ListaOrdenada[i]);
-                        i--; j--;
-
                     }
-                    else if (primeiroCurso.ListaOrdenada[i].OpcaoDeCurso2 == codCurso)
+                    else if (aluno.OpcaoDeCurso2 == codCurso)
                     {
-                        primeiroCurso.Selecionados.Add(primeiroCurso.ListaOrdenada[i]);
-                        primeiroCurso.ListaOrdenada.Remove(primeiroCurso.ListaOrdenada[i]);
-                        i--;  j--;
+                        primeiroCurso.Selecionados.Add(aluno);
+                        j--;
                     }
                     else
                     {
                         Console.WriteLine("Houve um erro ao inserir na lista de selecionados");
                     }
+
+                    primeiroCurso.ListaOrdenada.Remove(aluno);
                 }
             }
             else
@@ -100,9 +100,9 @@ namespace ProjetoFinalAED
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
             {
-                for (int i = 0, j = curso.QuantVagas; curso.ListaOrdenada.Count >= 1 && i < 10; i++, j++)
+                for (int i = 0; curso.ListaOrdenada[i] != null && i < 10; i++)
                 {
-                    //curso.FilaDeEspera.Add(curso.ListaOrdenada);
+                    //curso.FilaDeEspera.Add(curso.ListaOrdenada[i]);
                     curso.ListaOrdenada.Remove(curso.ListaOrdenada[i]);
                 }
             }
@@ -111,8 +111,8 @@ namespace ProjetoFinalAED
         public static void ReorganizarLista(Curso curso)
         {
             //if(curso.FilaDeEspera.Count >= 1){
-            //curso.Selecionados.Add(curso.FilaDeEspera.Deqeue());
-            ReorganizarFIla(curso);
+            //curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());     //Recebe o retorno da remoção da fila de espera e adiciona.
+              ReorganizarFIla(curso);
             //}
         }
 
@@ -120,22 +120,21 @@ namespace ProjetoFinalAED
         {
             if (curso.ListaOrdenada.Count >= 1)
             {
-                //curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);
+                //curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);      //Adiciona a primeira posição da lista de espera
                 curso.ListaOrdenada.RemoveAt(0);
             }
         }
-
-        public static void OrdenarLista((int codCurso, Universidade stark))
-         {
-             if(stark.Cursos.TryGetValue(codCurso, out Curso primeiroCurso)
+        public static void OrdenarLista(int codCurso, Universidade stark)
+        {
+          if(stark.Cursos.TryGetValue(codCurso, out Curso primeiroCurso)
              {
                  List<Candidato> ordenado = new MergeSort(MergeSort(MergeSort(primeiroCurso.ListaOrdenada, 1), 2), 3);
                  foreach (Candidato aluno in ordenado)
                      primeiroCurso.ListaOrdenada[i] = ordenado[i];
              }
-         }
-        
-         public static List<Candidato> MergeSort(List<Candidato> lista, int op)
+
+        }
+               public static List<Candidato> MergeSort(List<Candidato> lista, int op)
          {
              if (List.Count <= 1)
                  return lista;
