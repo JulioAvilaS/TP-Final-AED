@@ -63,11 +63,11 @@ namespace ProjetoFinalAED
                         if (stark.Cursos.TryGetValue(aluno.OpcaoDeCurso2, out Curso segundoCurso))
                         {
                             segundoCurso.ListaOrdenada.Remove(aluno);
-                            //if (segundoCurso.FilaDeEspera.Contains(aluno))
-                            //{
-                            //    segundoCurso.FilaDeEspera.Remove(aluno);
-                            //    ReorganizarFila(codCurso, stark)
-                            //}
+                            if (segundoCurso.FilaDeEspera.Contains(aluno))
+                            {
+                                segundoCurso.FilaDeEspera.Remove(aluno);
+                                //ReorganizarFila(codCurso, stark)
+                            }
                             //A FilaLinear ainda não existe...
 
                             if (segundoCurso.Selecionados.Contains(aluno))
@@ -102,7 +102,7 @@ namespace ProjetoFinalAED
             {
                 for (int i = 0; curso.ListaOrdenada[i] != null && i < 10; i++)
                 {
-                    //curso.FilaDeEspera.Add(curso.ListaOrdenada[i]);
+                    curso.FilaDeEspera.Add(curso.ListaOrdenada[i]);
                     curso.ListaOrdenada.Remove(curso.ListaOrdenada[i]);
                 }
             }
@@ -110,17 +110,17 @@ namespace ProjetoFinalAED
 
         public static void ReorganizarLista(Curso curso)
         {
-            //if(curso.FilaDeEspera.Count >= 1){
+            if(curso.FilaDeEspera.Cont >= 1){
             //curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());     //Recebe o retorno da remoção da fila de espera e adiciona.
               ReorganizarFIla(curso);
-            //}
+            }
         }
 
         public static void ReorganizarFIla(Curso curso)
         {
             if (curso.ListaOrdenada.Count >= 1)
             {
-                //curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);      //Adiciona a primeira posição da lista de espera
+                curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);      //Adiciona a primeira posição da lista de espera
                 curso.ListaOrdenada.RemoveAt(0);
             }
         }
