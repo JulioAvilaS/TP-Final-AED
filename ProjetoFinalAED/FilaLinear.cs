@@ -10,15 +10,15 @@ namespace ProjetoFinalAED
     {
         private Candidato[] array;
         int primeiro, ultimo;
-        public FilaLinear(int tamanho)
+        public FilaLinear()
         {
-            array = new Candidato[tamanho + 1];
+            array = new Candidato[10 + 1];
             primeiro = ultimo = 0;
         }
         public void Inserir(Candidato x)
         {
             if (((ultimo + 1) % array.Length) == primeiro)
-                throw new Exception("Erro!");
+                throw new Exception("Erro! ");
             array[ultimo] = x;
             ultimo = (ultimo + 1) % array.Length;
         }
