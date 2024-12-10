@@ -30,6 +30,8 @@ namespace ProjetoFinalAED
                     linha = entrada.ReadLine();
                     Metodos.AdicionarNaListaGeral(linha, stark);
                 }
+
+                entrada.Close();
             }
             catch (Exception err)
             {
@@ -46,7 +48,7 @@ namespace ProjetoFinalAED
 
             try
             {
-                StreamWriter saida = new StreamWriter("saida.txt");
+                StreamWriter saida = new StreamWriter("saida.txt", false);
 
                 foreach(var curso in stark.Cursos)
                 {
@@ -64,6 +66,7 @@ namespace ProjetoFinalAED
 
                 }
                 
+                saida.Close();
             }
             catch (Exception err)
             {

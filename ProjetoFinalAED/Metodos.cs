@@ -35,6 +35,7 @@ namespace ProjetoFinalAED
             }
 
         }
+
         public static void AdicionarNoDicionario(string frase, Universidade stark)
         {
             try
@@ -63,12 +64,14 @@ namespace ProjetoFinalAED
                         if (stark.Cursos.TryGetValue(aluno.OpcaoDeCurso2, out Curso segundoCurso))
                         {
                             segundoCurso.ListaOrdenada.Remove(aluno);
+
                             //if (segundoCurso.FilaDeEspera.Contains(aluno))
                             //{
                             //    segundoCurso.FilaDeEspera.Remove(aluno);
                             //    ReorganizarFila(codCurso, stark)
                             //}
                             //A FilaLinear ainda não existe...
+
 
                             if (segundoCurso.Selecionados.Contains(aluno))
                             {
@@ -81,7 +84,6 @@ namespace ProjetoFinalAED
                     else if (aluno.OpcaoDeCurso2 == codCurso)
                     {
                         primeiroCurso.Selecionados.Add(aluno);
-                        j--;
                     }
                     else
                     {
