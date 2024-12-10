@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoFinalAED
 {
-    internal class Candidato
+    public class Candidato
     {
         public string Nome { get; set; }
         public double Redacao { get; set; }

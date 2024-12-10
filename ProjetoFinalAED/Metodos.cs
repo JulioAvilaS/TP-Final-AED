@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjetoFinalAED
 {
@@ -14,14 +9,14 @@ namespace ProjetoFinalAED
         {
             string[] itens = frase.Split(";");
 
-            if (stark.Cursos.TryGetValue(int.Parse(itens[4]), out Curso curso1))   // --- ATENÇÂO --- O método TryGetValue manda como referência a key a ser procurada e retorna com o out o value dessa chave. 
+            if (stark.Cursos.TryGetValue(int.Parse(itens[4]), out Curso curso1))
             {
                 curso1.ListaOrdenada.Add(new Candidato(itens[0], int.Parse(itens[1]), int.Parse(itens[2]), int.Parse(itens[3]), int.Parse(itens[4]),
                     int.Parse(itens[5])));
             }
             else
             {
-                throw new Exception("Não foi possível encontrar um curso com esse código de identifição");
+                throw new Exception("Não foi possível encontrar um curso com esse código de identificação");
             }
 
             if (stark.Cursos.TryGetValue(int.Parse(itens[5]), out Curso curso2))
@@ -31,10 +26,10 @@ namespace ProjetoFinalAED
             }
             else
             {
-                throw new Exception("Não foi possível encontrar um curso com esse código de identifição");
+                throw new Exception("Não foi possível encontrar um curso com esse código de identificação");
             }
-
         }
+
         public static void AdicionarNoDicionario(string frase, Universidade stark)
         {
             try
@@ -44,7 +39,7 @@ namespace ProjetoFinalAED
             }
             catch (Exception err)
             {
-                Console.WriteLine($"Erro ao adicionar no Dicionario: {err}");
+                Console.WriteLine($"Erro ao adicionar no Dicionário: {err}");
             }
         }
 
@@ -66,9 +61,7 @@ namespace ProjetoFinalAED
                             if (segundoCurso.FilaDeEspera.Contains(aluno))
                             {
                                 segundoCurso.FilaDeEspera.Remove(aluno);
-                                //ReorganizarFila(codCurso, stark)
                             }
-                            //A FilaLinear ainda não existe...
 
                             if (segundoCurso.Selecionados.Contains(aluno))
                             {
@@ -76,7 +69,6 @@ namespace ProjetoFinalAED
                                 ReorganizarLista(segundoCurso);
                             }
                         }
-
                     }
                     else if (aluno.OpcaoDeCurso2 == codCurso)
                     {
@@ -93,14 +85,15 @@ namespace ProjetoFinalAED
             }
             else
             {
-                Console.WriteLine("Não foi possível encontrar um curso com esse código de identifição");
+                Console.WriteLine("Não foi possível encontrar um curso com esse código de identificação");
             }
         }
+
         public static void InserirNaFilaDeEspera(int codCurso, Universidade stark)
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
             {
-                for (int i = 0; curso.ListaOrdenada[i] != null && i < 10; i++)
+                for (int i = 0; curso.ListaOrdenada.Count > i && i < 10; i++)
                 {
                     curso.FilaDeEspera.Add(curso.ListaOrdenada[i]);
                     curso.ListaOrdenada.Remove(curso.ListaOrdenada[i]);
@@ -110,9 +103,10 @@ namespace ProjetoFinalAED
 
         public static void ReorganizarLista(Curso curso)
         {
-            if(curso.FilaDeEspera.Cont >= 1){
-            curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());     //Recebe o retorno da remoção da fila de espera e adiciona.
-            ReorganizarFIla(curso);
+            if (curso.FilaDeEspera.Count >= 1)
+            {
+                curso.Selecionados.Add(curso.FilaDeEspera.Dequeue());
+                ReorganizarFIla(curso);
             }
         }
 
@@ -120,7 +114,7 @@ namespace ProjetoFinalAED
         {
             if (curso.ListaOrdenada.Count >= 1)
             {
-                curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);      //Adiciona a primeira posição da lista de espera
+                curso.FilaDeEspera.Add(curso.ListaOrdenada[0]);
                 curso.ListaOrdenada.RemoveAt(0);
             }
         }
@@ -129,10 +123,10 @@ namespace ProjetoFinalAED
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso curso))
             {
-                curso.ListaOrdenada = MergeSort(MergeSort(MergeSort(curso.ListaOrdenada, 1), 2), 3);
+                curso.ListaOrdenada = MergeSort(curso.ListaOrdenada, 3);
             }
-
         }
+
         public static List<Candidato> MergeSort(List<Candidato> lista, int op)
         {
             if (lista.Count <= 1)
@@ -144,6 +138,7 @@ namespace ProjetoFinalAED
 
             return Intercala(esq, dir, op);
         }
+
         public static List<Candidato> Intercala(List<Candidato> esq, List<Candidato> dir, int op)
         {
             List<Candidato> candidatos = new List<Candidato>();
@@ -151,21 +146,9 @@ namespace ProjetoFinalAED
             double notaEsq, notaDir;
             while (i < esq.Count && j < dir.Count)
             {
-                if (op == 1)
-                {
-                    notaEsq = esq[i].Matematica;
-                    notaDir = dir[j].Matematica;
-                }
-                else if (op == 2)
-                {
-                    notaEsq = esq[i].Redacao;
-                    notaDir = dir[j].Redacao;
-                }
-                else
-                {
-                    notaEsq = esq[i].Media;
-                    notaDir = dir[j].Media;
-                }
+                notaEsq = op == 1 ? esq[i].Matematica : (op == 2 ? esq[i].Redacao : esq[i].Media);
+                notaDir = op == 1 ? dir[j].Matematica : (op == 2 ? dir[j].Redacao : dir[j].Media);
+
                 if (notaEsq >= notaDir)
                 {
                     candidatos.Add(esq[i]);
@@ -177,10 +160,11 @@ namespace ProjetoFinalAED
                     j++;
                 }
             }
+
             candidatos.AddRange(esq.GetRange(i, esq.Count - i));
             candidatos.AddRange(dir.GetRange(j, dir.Count - j));
             return candidatos;
         }
-
     }
 }
+
