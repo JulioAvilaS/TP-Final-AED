@@ -39,14 +39,14 @@ namespace ProjetoFinalAED
         {
             for (int i = primeiro; i != ultimo; i = (i + 1) % array.Length)
             {
-                if (array[i].Equals(candidato))
+                if (array[i] == candidato)
                 {
                     return true;
                 }
             }
             return false;
         }
-        public void Remove(Candidato candidato)
+        public bool Remove(Candidato candidato)
         {
             if (primeiro == ultimo)
                 throw new Exception("Fila vazia!");
@@ -63,7 +63,7 @@ namespace ProjetoFinalAED
             }
 
             if (posicaoRemover == -1)
-                throw new Exception("Elemento não encontrado!");
+                return false;
 
 
             for (int i = posicaoRemover; i != ultimo; i = (i + 1) % array.Length)
@@ -75,6 +75,8 @@ namespace ProjetoFinalAED
 
             ultimo = (ultimo - 1 + array.Length) % array.Length;
             array[ultimo] = null;
+
+            return true;
         }
         public Candidato Dequeue()
         {

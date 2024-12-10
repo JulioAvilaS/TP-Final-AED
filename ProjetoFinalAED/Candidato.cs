@@ -32,6 +32,21 @@ namespace ProjetoFinalAED
             return (Redacao + Matematica + Linguagens) / 3;
         }
 
+        public override bool Equals(object? obj)
+        {
+            if (obj is Candidato outro)
+            {
+                return Nome == outro.Nome &&
+                       Matematica == outro.Matematica &&
+                       Redacao == outro.Redacao &&
+                       OpcaoDeCurso1 == outro.OpcaoDeCurso1 &&
+                       OpcaoDeCurso2 == outro.OpcaoDeCurso2 &&
+                       Media == outro.Media;
+            }
+            return false;
+        }
+
+
         public override string ToString()
         {
             return $"{Nome} {Math.Round(Media, 2)} {Redacao} {Matematica} {Linguagens}";

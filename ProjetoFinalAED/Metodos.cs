@@ -48,34 +48,49 @@ namespace ProjetoFinalAED
         {
             if (stark.Cursos.TryGetValue(codCurso, out Curso primeiroCurso))
             {
-                int j = primeiroCurso.QuantVagas;
-                for (int i = 0; primeiroCurso.ListaOrdenada.Count >= 1 && i < j; j--)
+                
+                for (int j = primeiroCurso.QuantVagas; primeiroCurso.ListaOrdenada.Count >= 1 && j > 0; j--)
                 {
-                    var aluno = primeiroCurso.ListaOrdenada[i];
+                    var aluno = primeiroCurso.ListaOrdenada[0];
                     if (aluno.OpcaoDeCurso1 == codCurso)
                     {
                         primeiroCurso.Selecionados.Add(aluno);
 
                         if (stark.Cursos.TryGetValue(aluno.OpcaoDeCurso2, out Curso segundoCurso))
                         {
-                            segundoCurso.ListaOrdenada.Remove(aluno);
-
-                            if (segundoCurso.FilaDeEspera.Contains(aluno))
+                            Console.WriteLine("Segundo curso: " + segundoCurso.Nome);
+                            Console.WriteLine("Candidatos: ");
+                            foreach (var candidato in segundoCurso.ListaOrdenada)
                             {
-                                segundoCurso.FilaDeEspera.Remove(aluno);
+                                Console.WriteLine(candidato);
+                            }
+
+                            if (segundoCurso.ListaOrdenada.Contains(aluno))
+                            {
+                                Console.WriteLine($"Removendo aluno {aluno.Nome} encontrado");
+                                segundoCurso.ListaOrdenada.Remove(aluno);
+                            }
+                            else
+                            {
+                                Console.WriteLine("Aluno não encontrado");
                             }
 
                             if (segundoCurso.Selecionados.Contains(aluno))
                             {
-                                segundoCurso.Selecionados.Remove(aluno);
+                                Console.WriteLine("Aluno removido s " + segundoCurso.Selecionados.Remove(aluno));
                                 ReorganizarLista(segundoCurso);
                             }
+
+                            if (segundoCurso.FilaDeEspera.Contains(aluno))
+                            {
+                                Console.WriteLine("Aluno removido e " + segundoCurso.FilaDeEspera.Remove(aluno));
+                            }
+
                         }
                     }
                     else if (aluno.OpcaoDeCurso2 == codCurso)
                     {
                         primeiroCurso.Selecionados.Add(aluno);
-                        j--;
                     }
                     else
                     {

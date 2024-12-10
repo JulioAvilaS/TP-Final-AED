@@ -31,6 +31,7 @@ namespace ProjetoFinalAED
             NotaCorte = Selecionados[Selecionados.Count - 1].Media;
         }
 
+
         public override string ToString()
         {
             CalcularNotaCorte();
